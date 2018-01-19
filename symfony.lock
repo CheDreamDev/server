@@ -1,4 +1,7 @@
 {
+    "facebook/graph-sdk": {
+        "version": "5.6.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
