@@ -1,0 +1,20 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+    # ...
+
+    providers:
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+
+    firewalls:
+        main:
+            pattern:    ^/
+            http_basic: ~
+            provider: our_db_provider
