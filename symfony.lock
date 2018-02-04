@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -55,6 +58,9 @@
     },
     "doctrine/orm": {
         "version": "v2.6.0"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.33"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -169,6 +175,18 @@
             "version": "3.3",
             "ref": "34eb245ce4194e7ae713558084180e2c532e7afd"
         }
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bcd6c570c017ea6ae5a7a6a027c929fd3542cd8"
+        }
+    },
+    "symfony/validator": {
+        "version": "v4.0.4"
     },
     "symfony/yaml": {
         "version": "v4.0.3"

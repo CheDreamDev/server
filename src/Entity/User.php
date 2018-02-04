@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -86,10 +87,22 @@ class User implements UserInterface, \Serializable
     protected $facebookId;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Dream", mappedBy="usersWhoFavorites" )
+     */
+    protected $favoriteDreams;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Dream", mappedBy="author")
+     */
+    protected $dreams;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
+        $this->dreams         = new ArrayCollection();
+        $this->favoriteDreams = new ArrayCollection();
         $this->isActive = true;
     }
 
@@ -233,5 +246,69 @@ class User implements UserInterface, \Serializable
     public function setAbout($about)
     {
         $this->about = $about;
+    }
+
+    /**
+     * Add favoriteDreams
+     *
+     * @param  Dream $favoriteDreams
+     * @return User
+     */
+    public function addFavoriteDream(Dream $favoriteDreams)
+    {
+        $this->favoriteDreams[] = $favoriteDreams;
+        $favoriteDreams->addUsersWhoFavorite($this);
+        return $this;
+    }
+    /**
+     * Remove favoriteDreams
+     *
+     * @param Dream $favoriteDreams
+     */
+    public function removeFavoriteDream(Dream $favoriteDreams)
+    {
+        $this->favoriteDreams->removeElement($favoriteDreams);
+        $favoriteDreams->removeUsersWhoFavorite($this);
+    }
+    /**
+     * Get favoriteDreams
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFavoriteDreams()
+    {
+        return $this->favoriteDreams;
+    }
+
+    /**
+     * Add dreams
+     *
+     * @param  \App\Entity\Dream $dreams
+     * @return User
+     */
+    public function addDream(\App\Entity\Dream $dreams)
+    {
+        $this->dreams[] = $dreams;
+        return $this;
+    }
+
+    /**
+     * Remove dreams
+     *
+     * @param \App\Entity\Dream $dreams
+     */
+    public function removeDream(\App\Entity\Dream $dreams)
+    {
+        $this->dreams->removeElement($dreams);
+    }
+
+    /**
+     * Get dreams
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDreams()
+    {
+        return $this->dreams;
     }
 }
