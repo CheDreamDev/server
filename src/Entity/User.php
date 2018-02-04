@@ -125,10 +125,16 @@ class User implements UserInterface, \Serializable
         return serialize([
             $this->id,
             $this->username,
+            $this->email,
+            $this->facebookId
         ]);
     }
 
-    /** @see \Serializable::unserialize() */
+    /**
+     * @see \Serializable::unserialize()
+     *
+     * @param $serialized
+     */
     public function unserialize($serialized)
     {
         list (

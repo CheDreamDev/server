@@ -9,27 +9,23 @@ use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeController extends Controller
+class DefaultController extends Controller
 {
     /**
      * @Route("/")
      */
     public function index()
     {
-        $fb = new Facebook([
-            'app_id' => '2100826210141247', // Replace {app-id} with your app id
-            'app_secret' => 'a649d831412f50ba11a6fdb774318498',
-            'default_graph_version' => 'v2.2',
-        ]);
+        return $this->render('home/index.html.twig');
+    }
 
-        $helper = $fb->getRedirectLoginHelper();
 
-        $permissions = ['email']; // Optional permissions
-        $loginUrl = $helper->getLoginUrl('http://test.chedream.org/callback', $permissions);
-
-        return $this->render('base.html.twig',[
-            'url' => $loginUrl,
-        ]);
+    /**
+     * @Route("/admin")
+     */
+    public function admin()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
     }
 
 
