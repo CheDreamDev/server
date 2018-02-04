@@ -1,34 +1,42 @@
 security:
-    encoders:
-        App\Entity\User:
-            algorithm: bcrypt
+   encoders:
+       App\Entity\User:
+           algorithm: bcrypt
+       Symfony\Component\Security\Core\User\User: plaintext
 
+   providers:
+       db_provider:
+           entity:
+               class: App\Entity\User
+       in_memory:
+           memory:
+               users:
+                   aleks:
+                       password: qwerty
+                       roles: ‘ROLE_ADMIN’
 
-    providers:
-        db_provider:
-            entity:
-                class: App\Entity\User
+   firewalls:
+       dev:
+           pattern: ^/(_(profiler|wdt)|css|images|js)/
+           security: false
+       main:
+           pattern:    ^/
+           anonymous: ~
+           provider: db_provider
+           form_login:
+               login_path: login
+               check_path: login
+               csrf_token_generator: security.csrf.token_manager
 
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            pattern:    ^/
-            anonymous: ~
-            provider: db_provider
-            form_login:
-                login_path: login
-                check_path: login
-                csrf_token_generator: security.csrf.token_manager
-            logout:
-                path:   /logout
-                target: /
+           logout:
+               path:   /logout
+               target: /
 
-    access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_USER }
+   access_control:
+       - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/admin, roles: ROLE_ADMIN }
+       - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
-    role_hierarchy:
-          ROLE_ADMIN:       ROLE_USER
+   role_hierarchy:
+         ROLE_ADMIN: ROLE_USER
+         ROLE_USER: ROLE_USER

@@ -105,6 +105,7 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
+
     public function getPassword()
     {
         return $this->password;
@@ -143,6 +144,38 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->facebookId
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive): void
+    {
+        $this->isActive = $isActive;
     }
 
     /**
