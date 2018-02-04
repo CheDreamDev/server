@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -97,6 +98,11 @@ class User implements UserInterface, \Serializable
     protected $dreams;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EquipmentContribute", mappedBy="user")
+     */
+    protected $equipmentContributions;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -104,6 +110,7 @@ class User implements UserInterface, \Serializable
         $this->dreams         = new ArrayCollection();
         $this->favoriteDreams = new ArrayCollection();
         $this->isActive = true;
+        $this->equipmentContributions = new ArrayCollection();
     }
 
     public function getUsername()
@@ -283,10 +290,10 @@ class User implements UserInterface, \Serializable
     /**
      * Add dreams
      *
-     * @param  \App\Entity\Dream $dreams
+     * @param  Dream $dreams
      * @return User
      */
-    public function addDream(\App\Entity\Dream $dreams)
+    public function addDream(Dream $dreams)
     {
         $this->dreams[] = $dreams;
         return $this;
@@ -295,9 +302,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove dreams
      *
-     * @param \App\Entity\Dream $dreams
+     * @param Dream $dreams
      */
-    public function removeDream(\App\Entity\Dream $dreams)
+    public function removeDream(Dream $dreams)
     {
         $this->dreams->removeElement($dreams);
     }
@@ -305,10 +312,61 @@ class User implements UserInterface, \Serializable
     /**
      * Get dreams
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getDreams()
     {
         return $this->dreams;
     }
+
+    /**
+     * @param mixed $equipmentContributions
+     */
+    public function setEquipmentContributions($equipmentContributions)
+    {
+        $this->equipmentContributions = $equipmentContributions;
+    }
+
+    /**
+     * Add equipmentContributions
+     *
+     * @param  EquipmentContribute $equipmentContributions
+     * @return User
+     */
+    public function addEquipmentContribution(EquipmentContribute $equipmentContributions)
+    {
+        $this->equipmentContributions[] = $equipmentContributions;
+        return $this;
+    }
+
+    /**
+     * Remove equipmentContributions
+     *
+     * @param EquipmentContribute $equipmentContributions
+     */
+    public function removeEquipmentContribution(EquipmentContribute $equipmentContributions)
+    {
+        $this->equipmentContributions->removeElement($equipmentContributions);
+    }
+
+    /**
+     * Get equipmentContributions
+     *
+     * @return Collection
+     */
+    public function getEquipmentContributions()
+    {
+        return $this->equipmentContributions;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return '';
+    }
+
 }

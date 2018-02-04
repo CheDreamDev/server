@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\EquipmentContribute;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -146,12 +147,18 @@ class Dream
     protected $dreamVideos;
 
     /**
+     * @ORM\OneToMany(targetEntity="EquipmentContribute", mappedBy="dream")
+     */
+    protected $dreamEquipmentContributions;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->usersWhoFavorites = new ArrayCollection();
         $this->favoritesCount = 0;
+        $this->dreamEquipmentContributions = new ArrayCollection();
     }
 
     /**
@@ -555,5 +562,37 @@ class Dream
     public function setDreamVideos($dreamVideos)
     {
         $this->dreamVideos = $dreamVideos;
+    }
+
+    /**
+     * Add dreamEquipmentContributions
+     *
+     * @param  EquipmentContribute $dreamEquipmentContributions
+     * @return Dream
+     */
+    public function addDreamEquipmentContribution(EquipmentContribute $dreamEquipmentContributions)
+    {
+        $this->dreamEquipmentContributions[] = $dreamEquipmentContributions;
+        return $this;
+    }
+
+    /**
+     * Remove dreamEquipmentContributions
+     *
+     * @param EquipmentContribute $dreamEquipmentContributions
+     */
+    public function removeDreamEquipmentContribution(EquipmentContribute $dreamEquipmentContributions)
+    {
+        $this->dreamEquipmentContributions->removeElement($dreamEquipmentContributions);
+    }
+
+    /**
+     * Get dreamEquipmentContributions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDreamEquipmentContributions()
+    {
+        return $this->dreamEquipmentContributions;
     }
 }
