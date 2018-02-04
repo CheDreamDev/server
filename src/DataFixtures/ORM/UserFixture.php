@@ -10,17 +10,27 @@ namespace App\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 
 
 class UserFixture extends Fixture
 {
-    private  $users = [[
-        'username' => 'admin',
-        'email' => 'example@gmail.com',
-        'password' => '$2y$13$N.3SoU0.otDcWlDOGT3WXu7aVx.Yp4BoEk0trGQEEXaHw.ALSdwXy',
-        'isActive' => '1',
-    ]];
+    private $encoder;
+
+    private  $users = [
+        [
+            'username' => 'admin',
+            'email' => 'example@gmail.com',
+            'password' => 'admin',
+            'isActive' => '1',
+        ]
+    ];
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
 
     public function load(ObjectManager $manager)
     {
@@ -32,9 +42,8 @@ class UserFixture extends Fixture
 
             $userTest->setPassword($user['password']);
 
-//            $encoder = $this->container->get('security.password_encoder');
-//            $password = $encoder->encodePassword($userTest, $userTest->getPassword());
-//            $userTest->setPassword($password);
+            $password = $this->encoder->encodePassword($userTest, $userTest->getPassword());
+            $userTest->setPassword($password);
 
             $userTest->setUsername($user['username']);
             $userTest->setIsActive($user['isActive']);
