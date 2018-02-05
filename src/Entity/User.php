@@ -5,6 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\FinancialContribute;
+use App\Entity\WorkContribute;
+use App\Entity\OtherContribute;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -93,6 +96,11 @@ class User implements UserInterface, \Serializable
     protected $favoriteDreams;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FinancialContribute", mappedBy="user")
+     */
+    protected $financialContributions;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dream", mappedBy="author")
      */
     protected $dreams;
@@ -103,14 +111,25 @@ class User implements UserInterface, \Serializable
     protected $equipmentContributions;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\WorkContribute", mappedBy="user")
+     */
+    protected $workContributions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OtherContribute", mappedBy="user")
+     */
+    protected $otherContributions;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
-        $this->dreams         = new ArrayCollection();
+        $this->dreams = new ArrayCollection();
         $this->favoriteDreams = new ArrayCollection();
         $this->isActive = true;
         $this->equipmentContributions = new ArrayCollection();
+        $this->workContributions = new ArrayCollection();
     }
 
     public function getUsername()
@@ -267,6 +286,7 @@ class User implements UserInterface, \Serializable
         $favoriteDreams->addUsersWhoFavorite($this);
         return $this;
     }
+
     /**
      * Remove favoriteDreams
      *
@@ -277,6 +297,7 @@ class User implements UserInterface, \Serializable
         $this->favoriteDreams->removeElement($favoriteDreams);
         $favoriteDreams->removeUsersWhoFavorite($this);
     }
+
     /**
      * Get favoriteDreams
      *
@@ -369,4 +390,90 @@ class User implements UserInterface, \Serializable
         return '';
     }
 
+    /**
+     * Add financialContributions
+     *
+     * @param  FinancialContribute $financialContributions
+     * @return User
+     */
+    public function addFinancialContribution(FinancialContribute $financialContributions)
+    {
+        $this->financialContributions[] = $financialContributions;
+        return $this;
+    }
+
+
+    /**
+     * Remove financialContributions
+     *
+     * @param FinancialContribute $financialContributions
+     */
+    public function removeFinancialContribution(FinancialContribute $financialContributions)
+    {
+        $this->financialContributions->removeElement($financialContributions);
+    }
+
+    /**
+     * Get financialContributions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFinancialContributions()
+    {
+        return $this->financialContributions;
+    }
+
+    /**
+     * Add workContributions
+     *
+     * @param  WorkContribute $workContributions
+     * @return User
+     */
+    public function addWorkContribution(WorkContribute $workContributions)
+    {
+        $this->workContributions[] = $workContributions;
+        return $this;
+    }
+
+    /**
+     * Remove workContributions
+     *
+     * @param WorkContribute $workContributions
+     */
+    public function removeWorkContribution(WorkContribute $workContributions)
+    {
+        $this->workContributions->removeElement($workContributions);
+    }
+
+    /**
+     * Get workContributions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkContributions()
+    {
+        return $this->workContributions;
+    }
+
+    /**
+     * Add otherContributions
+     *
+     * @param  OtherContribute $otherContributions
+     * @return User
+     */
+    public function addOtherContribution(OtherContribute $otherContributions)
+    {
+        $this->otherContributions[] = $otherContributions;
+        return $this;
+    }
+
+    /**
+     * Remove otherContributions
+     *
+     * @param OtherContribute $otherContributions
+     */
+    public function removeOtherContribution(OtherContribute $otherContributions)
+    {
+        $this->otherContributions->removeElement($otherContributions);
+    }
 }
