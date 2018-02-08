@@ -127,9 +127,12 @@ class User implements UserInterface, \Serializable
     {
         $this->dreams = new ArrayCollection();
         $this->favoriteDreams = new ArrayCollection();
+        $this->financialContributions = new ArrayCollection();
         $this->isActive = true;
         $this->equipmentContributions = new ArrayCollection();
         $this->workContributions = new ArrayCollection();
+        $this->otherContributions = new ArrayCollection();
+        parent::__construct();
     }
 
     public function getUsername()
