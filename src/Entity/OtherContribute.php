@@ -25,6 +25,12 @@ class OtherContribute extends AbstractContribute
      * @ORM\Column(name="title", type="string", length=250)
      */
     protected $title;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="otherContributions")
+     */
+    protected $user;
+
     public function __construct()
     {
         $this->setQuantity(0);

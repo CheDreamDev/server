@@ -20,10 +20,17 @@ class WorkContribute extends AbstractContribute
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="WorkResource")
      */
     protected $workResource;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="workContributions")
+     */
+    protected $user;
+
     /**
      * Get id
      *

@@ -19,6 +19,12 @@ class FinancialContribute extends AbstractContribute
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="financialContributions")
+     */
+    protected $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="FinancialResource")
      */
