@@ -152,6 +152,11 @@ class Dream
     protected $dreamEquipmentContributions;
 
     /**
+     * @ORM\OneToMany(targetEntity="Status", mappedBy="dream", cascade={"persist"})
+     */
+    protected $statuses;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -594,5 +599,15 @@ class Dream
     public function getDreamEquipmentContributions()
     {
         return $this->dreamEquipmentContributions;
+    }
+
+    /**
+     * Get mediaPoster
+     *
+     * @var string
+     */
+    public function getMediaPoster()
+    {
+        return '';
     }
 }
