@@ -13,6 +13,8 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="index")
+     *
+     * @return Response
      */
     public function index()
     {

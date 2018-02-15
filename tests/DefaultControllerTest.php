@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DefaultControllerTest extends WebTestCase
 {
+
+    /**
+     * Example for testing
+     */
     public function testIndex()
     {
         $client = static::createClient();
