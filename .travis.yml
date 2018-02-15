@@ -4,16 +4,11 @@ matrix:
   fast_finish: true
   include:
     - php: '7.1'
-      env: TARGET=phpcs
-    - php: '7.1'
-      env: TARGET=phpmd
-    - php: '7.1'
-      env: TARGET=phpunit
 
 before_script:
     - composer self-update
     - composer install
 
 script:
-  - if [ "$TARGET" = "phpcs" ]; then ./vendor/bin/phpcs ./src ./tests -p --encoding=utf-8 --extensions=php --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony --exclude=Symfony.Commenting.License; fi
-  - if [ "$TARGET" = "phpunit" ]; then ./vendor/bin/phpunit --coverage-clover=coverage.clover; fi
+  - ./vendor/bin/phpcs ./src ./tests -p --encoding=utf-8 --extensions=php --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony --exclude=Symfony.Commenting.License;
+  - ./vendor/bin/phpunit --coverage-text -c phpunit.xml.dist;
