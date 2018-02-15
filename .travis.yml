@@ -13,9 +13,8 @@ matrix:
 before_script:
     - composer self-update
     - composer install
-    - if [ "$TARGET" = "phpunit" ]; then ./install.sh; fi
 
 script:
-  - if [ "$TARGET" = "phpunit" ]; then bin/phpunit --coverage-clover=coverage.clover; fi
+  - if [ "$TARGET" = "phpunit" ]; then vendor/bin/phpunit --coverage-clover=coverage.clover; fi
   - if [ "$TARGET" = "phpunit" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [ "$TARGET" = "phpunit" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
