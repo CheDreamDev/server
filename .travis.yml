@@ -15,4 +15,5 @@ before_script:
     - composer install
 
 script:
-  - if [ "$TARGET" = "phpunit" ]; then vendor/bin/phpunit --coverage-clover=coverage.clover; fi
+  - if [ "$TARGET" = "phpcs" ]; then ./vendor/bin/phpcs ./src ./tests -p --encoding=utf-8 --extensions=php --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony --exclude=Symfony.Commenting.License; fi
+  - if [ "$TARGET" = "phpunit" ]; then ./vendor/bin/phpunit --coverage-clover=coverage.clover; fi
