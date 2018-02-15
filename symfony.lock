@@ -56,6 +56,9 @@
     "doctrine/orm": {
         "version": "v2.6.0"
     },
+    "escapestudios/symfony2-coding-standard": {
+        "version": "3.x-dev"
+    },
     "facebook/graph-sdk": {
         "version": "5.6.1"
     },
@@ -71,6 +74,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "pdepend/pdepend": {
+        "version": "2.5.2"
+    },
     "phar-io/manifest": {
         "version": "1.0.1"
     },
@@ -85,6 +91,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpmd/phpmd": {
+        "version": "2.6.0"
     },
     "phpspec/prophecy": {
         "version": "1.7.4"
@@ -169,6 +178,9 @@
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.2.2"
     },
     "symfony/browser-kit": {
         "version": "v4.0.4"
