@@ -126,6 +126,7 @@ class User implements UserInterface, \Serializable
         return serialize([
             $this->id,
             $this->username,
+            $this->password,
             $this->email,
             $this->facebookId
         ]);
@@ -141,6 +142,7 @@ class User implements UserInterface, \Serializable
         list (
             $this->id,
             $this->username,
+            $this->password,
             $this->email,
             $this->facebookId
             ) = unserialize($serialized);
