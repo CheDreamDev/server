@@ -4,180 +4,146 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
 
 /**
- * @ORM\Table(name="app_users")
+ * User
+ *
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
-class User implements UserInterface, \Serializable
+class User extends OAuthUser implements EquatableInterface, \Serializable
 {
-
-    use ContactsInfo;
-
-    const FAKE_EMAIL_PART = "@example.com";
-
     /**
-     * @ORM\Column(type="integer")
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=50, nullable=true)
-     */
-    protected $firstName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="middleName", type="string", length=50, nullable=true)
-     */
-    protected $middleName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
-     */
-    protected $lastName;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="birthday", type="date", nullable=true)
-     */
-    protected $birthday;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="about", type="text", nullable=true)
-     */
-    protected $about;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="facebook_id", type="string", length=45, nullable=true, unique=true)
+     * @ORM\Column(name="facebook_id", type="string", length=255, unique=true, nullable=true)
      */
     protected $facebookId;
 
     /**
-     * User constructor.
-     */
-    public function __construct()
-    {
-        $this->isActive = true;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->email,
-            $this->facebookId
-        ]);
-    }
-
-    /**
-     * @see \Serializable::unserialize()
+     * @var string
      *
-     * @param $serialized
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->email,
-            $this->facebookId
-            ) = unserialize($serialized);
-    }
+    protected $username;
 
     /**
-     * @param mixed $username
+     * @var string
+     *
+     * @ORM\Column(name="realname", type="string", length=255, nullable=true)
      */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
+    protected $realname;
 
     /**
-     * @param mixed $password
+     * @var string
+     *
+     * @ORM\Column(name="nickname", type="string", length=255, nullable=true)
      */
-    public function setPassword($password): void
-    {
-        $this->password = $password;
-    }
+    protected $nickname;
 
     /**
-     * @param mixed $email
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=32)
      */
-    public function setEmail($email): void
-    {
-        $this->email = $email;
-    }
+    protected $salt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    protected $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    protected $isActive;
+
 
     /**
      * @param mixed $isActive
      */
-    public function setIsActive($isActive): void
+    public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->salt = md5(uniqid('', true));
+    }
+
+    /**
+     * @param string $nickname
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * @param string $realname
+     */
+    public function setRealname($realname)
+    {
+        $this->realname = $realname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRealname()
+    {
+        return $this->realname;
+    }
+
+    /**
+     * @param string $googleId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
     }
 
     /**
@@ -188,91 +154,155 @@ class User implements UserInterface, \Serializable
         return $this->facebookId;
     }
 
-    /**
-     * @param string $facebookId
-     */
-    public function setFacebookId($facebookId)
+    public function getRoles()
     {
-        $this->facebookId = $facebookId;
+        return array('ROLE_USER');
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
      * @return string
      */
-    public function getFirstName()
+    public function getUsername()
     {
-        return $this->firstName;
+        return $this->username;
     }
 
     /**
-     * @param string $firstName
+     * Set salt
+     *
+     * @param string $salt
+     * @return User
      */
-    public function setFirstName($firstName)
+    public function setSalt($salt)
     {
-        $this->firstName = $firstName;
+        $this->salt = $salt;
+
+        return $this;
     }
 
     /**
+     * Get salt
+     *
      * @return string
      */
-    public function getMiddleName()
+    public function getSalt()
     {
-        return $this->middleName;
+        return $this->salt;
     }
 
     /**
-     * @param string $middleName
+     * Set password
+     *
+     * @param string $password
+     * @return User
      */
-    public function setMiddleName($middleName)
+    public function setPassword($password)
     {
-        $this->middleName = $middleName;
+        $this->password = $password;
+
+        return $this;
     }
 
     /**
+     * Get password
+     *
      * @return string
      */
-    public function getLastName()
+    public function getPassword()
     {
-        return $this->lastName;
+        return $this->password;
     }
 
     /**
-     * @param string $lastName
+     * Set email
+     *
+     * @param string $email
+     * @return User
      */
-    public function setLastName($lastName)
+    public function setEmail($email)
     {
-        $this->lastName = $lastName;
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
-     * @return mixed
-     */
-    public function getBirthday()
-    {
-        return $this->birthday;
-    }
-
-    /**
-     * @param mixed $birthday
-     */
-    public function setBirthday($birthday)
-    {
-        $this->birthday = $birthday;
-    }
-
-    /**
+     * Get email
+     *
      * @return string
      */
-    public function getAbout()
+    public function getEmail()
     {
-        return $this->about;
+        return $this->email;
     }
 
     /**
-     * @param string $about
+     * @inheritDoc
      */
-    public function setAbout($about)
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
     {
-        $this->about = $about;
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            ) = unserialize($serialized);
+    }
+
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if ((int)$this->getId() === $user->getId()) {
+            return true;
+        }
+
+        return false;
     }
 }

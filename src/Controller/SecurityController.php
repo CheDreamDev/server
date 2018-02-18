@@ -19,41 +19,13 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
-     *
      */
-    public function login(AuthenticationUtils $authUtils)
+    public function login()
     {
-        $fb = new Facebook([
-            'app_id' => '2100826210141247', // Replace {app-id} with your app id
-            'app_secret' => 'a649d831412f50ba11a6fdb774318498',
-            'default_graph_version' => 'v2.2',
+        $facebook_app_id = $this->container->getParameter('facebook_app_id');
+
+        return $this->render('security/login.html.twig',[
+            'facebook_app_id' => $facebook_app_id
         ]);
-
-        $helper = $fb->getRedirectLoginHelper();
-
-        $permissions = ['email']; // Optional permissions
-        $loginUrl = $helper->getLoginUrl('http://test.chedream.org/callback', $permissions);
-
-        // get the login error if there is one
-        $error = $authUtils->getLastAuthenticationError();
-
-        // last username entered by the user
-        $lastUsername = $authUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', array(
-            'last_username' => $lastUsername,
-            'error'         => $error,
-            'url'           => $loginUrl,
-        ));
-
-    }
-
-
-    /**
-     * @Route("/logout")
-     */
-    public function logout()
-    {
-
     }
 }

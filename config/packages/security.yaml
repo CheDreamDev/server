@@ -2,32 +2,28 @@ security:
    encoders:
        App\Entity\User:
            algorithm: bcrypt
-       Symfony\Component\Security\Core\User\User: plaintext
 
    providers:
-       db_provider:
-           entity:
-               class: App\Entity\User
-       in_memory:
-           memory:
-               users:
-                   aleks:
-                       password: qwerty
-                       roles: ‘ROLE_ADMIN’
+        my_custom_hwi_provider:
+            id: ib_user.oauth_user_provider
+#        hwi:
+#            id: hwi_oauth.user.provider
 
    firewalls:
        dev:
            pattern: ^/(_(profiler|wdt)|css|images|js)/
            security: false
-       main:
+       secured_area:
            pattern:    ^/
+           oauth:
+               resource_owners:
+                   facebook:      /login_facebook
+               login_path:        /login
+               failure_path:      /login
+               oauth_user_provider:
+                   service: ib_user.oauth_user_provider
+#                   service: hwi_oauth.user.provider.entity
            anonymous: ~
-           provider: db_provider
-           form_login:
-               login_path: login
-               check_path: login
-               csrf_token_generator: security.csrf.token_manager
-
            logout:
                path:   /logout
                target: /
