@@ -2,22 +2,26 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class DefaultController
- */
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="index")
-     *
-     * @return Response
+     * @Route("/")
      */
     public function index()
     {
-        return new Response('Welcome to your new controller!');
+        return $this->render('default/index.html.twig');
+    }
+
+
+    /**
+     * @Route("/admin")
+     */
+    public function admin()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
     }
 }
