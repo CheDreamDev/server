@@ -5391,7 +5391,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "symfony/lts": 20
+        "symfony/lts": 20,
+        "escapestudios/symfony2-coding-standard": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
