@@ -115,8 +115,6 @@ class Dream
      */
     protected $equipmentCompleted;
 
-    protected $tags;
-
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="favoriteDreams")
      * @ORM\JoinTable(name="favorite_dreams")
@@ -155,6 +153,12 @@ class Dream
      * @ORM\OneToMany(targetEntity="Status", mappedBy="dream", cascade={"persist"})
      */
     protected $statuses;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tags", inversedBy="$dreamsWithTag" )
+     * @ORM\Column(type="string")
+     */
+    protected $tags;
 
     /**
      * Constructor
