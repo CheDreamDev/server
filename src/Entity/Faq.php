@@ -1,18 +1,21 @@
 <?php
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * Faq
  *
  * @ORM\Table(name="faq")
  * @ORM\Entity
+ *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Faq
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -47,6 +50,7 @@ class Faq
      * @var string
      *
      * @Gedmo\Slug(fields={"title"})
+     *
      * @ORM\Column(length=200, unique=true)
      */
     protected $slug;
@@ -63,11 +67,13 @@ class Faq
      * Set title
      *
      * @param  string $title
+     *
      * @return Faq
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
     /**
@@ -83,11 +89,13 @@ class Faq
      * Set question
      *
      * @param  string $question
+     *
      * @return Faq
      */
     public function setQuestion($question)
     {
         $this->question = $question;
+
         return $this;
     }
     /**
@@ -103,11 +111,13 @@ class Faq
      * Set answer
      *
      * @param  string $answer
+     *
      * @return Faq
      */
     public function setAnswer($answer)
     {
         $this->answer = $answer;
+
         return $this;
     }
     /**
@@ -123,11 +133,13 @@ class Faq
      * Set deletedAt
      *
      * @param  \DateTime $deletedAt
+     *
      * @return Faq
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+
         return $this;
     }
     /**
@@ -143,11 +155,13 @@ class Faq
      * Set slug
      *
      * @param  string $slug
+     *
      * @return Faq
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
         return $this;
     }
     /**

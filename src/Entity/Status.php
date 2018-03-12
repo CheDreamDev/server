@@ -1,5 +1,6 @@
 <?php
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use App\Entity\Dream;
@@ -20,7 +21,7 @@ class Status implements EventInterface
     const SUCCESS              = 'success';
     const FAIL                 = 'fail';
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,6 +30,7 @@ class Status implements EventInterface
     protected $id;
     /**
      * @var string
+     *
      * @return string
      *
      * @ORM\Column(name="title", type="string", length=30)
@@ -38,6 +40,7 @@ class Status implements EventInterface
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
+     *
      * @ORM\Column(name="createdAt", type="datetime")
      */
     protected $createdAt;
@@ -46,6 +49,11 @@ class Status implements EventInterface
      * @ORM\ManyToOne(targetEntity="Dream", inversedBy="statuses")
      */
     protected $dream;
+
+    /**
+     * Status constructor.
+     * @param string $title
+     */
     public function __construct($title)
     {
         $this->title = $title;
@@ -63,11 +71,13 @@ class Status implements EventInterface
      * Set title
      *
      * @param  string $title
+     *
      * @return Status
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
     /**
@@ -83,11 +93,13 @@ class Status implements EventInterface
      * Set createdAt
      *
      * @param  \DateTime $createdAt
+     *
      * @return Status
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
     /**
@@ -103,11 +115,13 @@ class Status implements EventInterface
      * Set dream
      *
      * @param  Dream $dream
+     *
      * @return Status
      */
     public function setDream(Dream $dream = null)
     {
         $this->dream = $dream;
+
         return $this;
     }
     /**
@@ -119,6 +133,10 @@ class Status implements EventInterface
     {
         return $this->dream;
     }
+
+    /**
+     * @return array
+     */
     public static function getStatusesArray()
     {
         return array(
@@ -132,10 +150,17 @@ class Status implements EventInterface
         );
     }
 
+    /**
+     * @return string
+     */
     public function getEventImage()
     {
         return $this->getDream()->getMediaPoster();
     }
+
+    /**
+     * @return string
+     */
     public function getEventTitle()
     {
         return sprintf('Dream "%s", has changed status to "%s"', $this->getDream()->getTitle(), $this->getTitle());

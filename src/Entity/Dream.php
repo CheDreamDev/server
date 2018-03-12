@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Table(name="dreams")
  * @ORM\Entity(repositoryClass="App\Repository\DreamRepository")
+ *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Dream
@@ -25,12 +26,14 @@ class Dream
     /**
      * @Assert\NotBlank(message = "dream.not_blank")
      * @Assert\Length(min = "5", minMessage = "dream.min_length")
+     *
      * @ORM\Column(name="title", type="string", length=200)
      */
     protected $title;
 
     /**
      * @Assert\NotBlank(message = "dream.not_blank")
+     *
      * @ORM\Column(name="description", type="text")
      */
     protected $description;
@@ -53,12 +56,14 @@ class Dream
     /**
      * @Assert\NotBlank(message = "dream.not_blank")
      * @Assert\Regex(pattern="/^[+0-9 ()-]+$/", message="dream.only_numbers")
+     *
      * @ORM\Column(name="phone", type="string", length=45, nullable=true)
      */
     protected $phone;
 
     /**
      * @Gedmo\Slug(fields={"title"})
+     *
      * @ORM\Column(name="slug", type="string", length=200, unique=true)
      */
     protected $slug;
@@ -67,6 +72,7 @@ class Dream
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
+     *
      * @ORM\Column(name="createdAt", type="datetime")
      */
     protected $createdAt;
@@ -75,6 +81,7 @@ class Dream
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="update")
+     *
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     protected $updatedAt;
@@ -95,21 +102,21 @@ class Dream
 
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="financialCompleted", type="smallint", nullable=true)
      */
     protected $financialCompleted;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="workCompleted", type="smallint", nullable=true)
      */
     protected $workCompleted;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="equipmentCompleted", type="smallint", nullable=true)
      */
@@ -122,7 +129,7 @@ class Dream
     protected $usersWhoFavorites;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="favoritesCount", type="integer", nullable=false)
      */
@@ -184,12 +191,14 @@ class Dream
      * Add usersWhoFavorites
      *
      * @param \App\Entity\User $usersWhoFavorites
+     *
      * @return Dream
      */
     public function addUsersWhoFavorite(\App\Entity\User $usersWhoFavorites)
     {
         $this->usersWhoFavorites[] = $usersWhoFavorites;
         $this->favoritesCount = $this->usersWhoFavorites->count();
+
         return $this;
     }
 
@@ -203,6 +212,7 @@ class Dream
         $this->usersWhoFavorites->removeElement($usersWhoFavorites);
         $this->favoritesCount = $this->usersWhoFavorites->count();
     }
+
     /**
      * Get usersWhoFavorites
      *
@@ -577,11 +587,13 @@ class Dream
      * Add dreamEquipmentContributions
      *
      * @param  EquipmentContribute $dreamEquipmentContributions
+     *
      * @return Dream
      */
     public function addDreamEquipmentContribution(EquipmentContribute $dreamEquipmentContributions)
     {
         $this->dreamEquipmentContributions[] = $dreamEquipmentContributions;
+
         return $this;
     }
 
@@ -609,6 +621,8 @@ class Dream
      * Get mediaPoster
      *
      * @var string
+     *
+     * @return string
      */
     public function getMediaPoster()
     {

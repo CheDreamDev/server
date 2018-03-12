@@ -135,11 +135,17 @@ class User implements UserInterface, \Serializable
         parent::__construct();
     }
 
+    /**
+     * @return mixed
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
+    /**
+     * @return null
+     */
     public function getSalt()
     {
         // you *may* need a real salt depending on your encoder
@@ -147,21 +153,34 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * @return array
+     */
     public function getRoles()
     {
         return array('ROLE_USER');
     }
 
+    /**
+     *
+     */
     public function eraseCredentials()
     {
     }
 
-    /** @see \Serializable::serialize() */
+    /**
+     * @see \Serializable::serialize()
+     *
+     * @return array
+     */
     public function serialize()
     {
         return serialize([
@@ -170,7 +189,9 @@ class User implements UserInterface, \Serializable
         ]);
     }
 
-    /** @see \Serializable::unserialize() */
+    /**
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         list (
@@ -281,12 +302,14 @@ class User implements UserInterface, \Serializable
      * Add favoriteDreams
      *
      * @param  Dream $favoriteDreams
+     *
      * @return User
      */
     public function addFavoriteDream(Dream $favoriteDreams)
     {
         $this->favoriteDreams[] = $favoriteDreams;
         $favoriteDreams->addUsersWhoFavorite($this);
+
         return $this;
     }
 
@@ -315,11 +338,13 @@ class User implements UserInterface, \Serializable
      * Add dreams
      *
      * @param  Dream $dreams
+     *
      * @return User
      */
     public function addDream(Dream $dreams)
     {
         $this->dreams[] = $dreams;
+
         return $this;
     }
 
@@ -355,11 +380,13 @@ class User implements UserInterface, \Serializable
      * Add equipmentContributions
      *
      * @param  EquipmentContribute $equipmentContributions
+     *
      * @return User
      */
     public function addEquipmentContribution(EquipmentContribute $equipmentContributions)
     {
         $this->equipmentContributions[] = $equipmentContributions;
+
         return $this;
     }
 
@@ -397,11 +424,13 @@ class User implements UserInterface, \Serializable
      * Add financialContributions
      *
      * @param  FinancialContribute $financialContributions
+     *
      * @return User
      */
     public function addFinancialContribution(FinancialContribute $financialContributions)
     {
         $this->financialContributions[] = $financialContributions;
+
         return $this;
     }
 
@@ -430,11 +459,13 @@ class User implements UserInterface, \Serializable
      * Add workContributions
      *
      * @param  WorkContribute $workContributions
+     *
      * @return User
      */
     public function addWorkContribution(WorkContribute $workContributions)
     {
         $this->workContributions[] = $workContributions;
+
         return $this;
     }
 
@@ -462,11 +493,13 @@ class User implements UserInterface, \Serializable
      * Add otherContributions
      *
      * @param  OtherContribute $otherContributions
+     *
      * @return User
      */
     public function addOtherContribution(OtherContribute $otherContributions)
     {
         $this->otherContributions[] = $otherContributions;
+
         return $this;
     }
 

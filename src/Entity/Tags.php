@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Tags
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -61,5 +61,4 @@ class Tags
     {
         $this->dreamsWithTag = $dreamsWithTag;
     }
-
 }

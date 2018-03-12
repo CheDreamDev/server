@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FinancialContribute extends AbstractContribute
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -42,11 +42,13 @@ class FinancialContribute extends AbstractContribute
      * Set financialResource
      *
      * @param  FinancialResource $financialResource
+     *
      * @return FinancialContribute
      */
     public function setFinancialResource(FinancialResource $financialResource = null)
     {
         $this->financialResource = $financialResource;
+
         return $this;
     }
     /**

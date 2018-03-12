@@ -14,6 +14,7 @@ class AbstractResource extends AbstractContributeResource
      * @var string
      *
      * @Assert\NotBlank(message = "dream.not_blank")
+     *
      * @ORM\Column(name="title", type="string", length=100)
      */
     protected $title;
@@ -22,6 +23,7 @@ class AbstractResource extends AbstractContributeResource
      * Set title
      *
      * @param  string $title
+     *
      * @return $this
      */
     public function setTitle($title)

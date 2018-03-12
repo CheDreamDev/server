@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  *
  * @ORM\Table(name="other_contributes")
@@ -11,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class OtherContribute extends AbstractContribute
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,6 +24,7 @@ class OtherContribute extends AbstractContribute
      * @var string
      *
      * @Assert\NotBlank(message = "dream.not_blank")
+     *
      * @ORM\Column(name="title", type="string", length=250)
      */
     protected $title;
@@ -31,6 +34,9 @@ class OtherContribute extends AbstractContribute
      */
     protected $user;
 
+    /**
+     * OtherContribute constructor.
+     */
     public function __construct()
     {
         $this->setQuantity(0);
@@ -47,12 +53,14 @@ class OtherContribute extends AbstractContribute
     /**
      * Set title
      *
-     * @param  string          $title
+     * @param  string $title
+     *
      * @return OtherContribute
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
     /**

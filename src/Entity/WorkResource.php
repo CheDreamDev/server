@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\AbstractResource;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * DreamResource
  *
@@ -12,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class WorkResource extends AbstractResource
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id

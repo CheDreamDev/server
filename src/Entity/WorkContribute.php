@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\AbstractContribute;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\WorkResource;
@@ -13,7 +14,7 @@ use App\Entity\WorkResource;
 class WorkContribute extends AbstractContribute
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -44,11 +45,13 @@ class WorkContribute extends AbstractContribute
      * Set workResource
      *
      * @param  WorkResource $workResource
+     *
      * @return WorkContribute
      */
     public function setWorkResource(WorkResource $workResource = null)
     {
         $this->workResource = $workResource;
+
         return $this;
     }
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * ExportedUser
  *
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ExportedUser
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id

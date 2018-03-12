@@ -16,17 +16,8 @@ class EquipmentResource extends AbstractResource
     const KG = 'kg';
     const PIECE = 'piece';
 
-    public static function getReadableQuantityTypes()
-    {
-        return array(
-            self::PIECE => 'dream.equipment.piece',
-            self::KG => 'dream.equipment.kg',
-            self::TON => 'dream.equipment.ton'
-        );
-    }
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -54,11 +45,13 @@ class EquipmentResource extends AbstractResource
      * Set quantityType
      *
      * @param  string $quantityType
+     *
      * @return $this
      */
     public function setQuantityType($quantityType)
     {
         $this->quantityType = $quantityType;
+
         return $this;
     }
 
@@ -70,5 +63,17 @@ class EquipmentResource extends AbstractResource
     public function getQuantityType()
     {
         return $this->quantityType;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReadableQuantityTypes()
+    {
+        return array(
+            self::PIECE => 'dream.equipment.piece',
+            self::KG => 'dream.equipment.kg',
+            self::TON => 'dream.equipment.ton',
+        );
     }
 }

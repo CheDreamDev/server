@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AbstractContribute extends AbstractContributeResource implements EventInterface
 {
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="hiddenContributor", type="boolean")
      */
@@ -25,6 +25,7 @@ class AbstractContribute extends AbstractContributeResource implements EventInte
      * Set hiddenContributor
      *
      * @param  boolean $hiddenContributor
+     *
      * @return $this
      */
     public function setHiddenContributor($hiddenContributor)
@@ -48,6 +49,7 @@ class AbstractContribute extends AbstractContributeResource implements EventInte
      * Set user
      *
      * @param  User $user
+     *
      * @return $this
      */
     public function setUser(User $user = null)
@@ -67,11 +69,17 @@ class AbstractContribute extends AbstractContributeResource implements EventInte
         return $this->user;
     }
 
+    /**
+     * @return string
+     */
     public function getEventImage()
     {
         return $this->getUser()->getAvatar();
     }
 
+    /**
+     * @return string
+     */
     public function getEventTitle()
     {
         return sprintf('%s %s contributed %s', $this->getUser()->getFirstName(), $this->getUser()->getLastName(), $this->getDream()->getTitle());

@@ -13,7 +13,7 @@ use App\Entity\EquipmentResource;
 class EquipmentContribute extends AbstractContribute
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -40,6 +40,7 @@ class EquipmentContribute extends AbstractContribute
      * Set equipmentResource
      *
      * @param  EquipmentResource $equipmentResource
+     *
      * @return EquipmentContribute
      */
     public function setEquipmentResource(EquipmentResource $equipmentResource = null)

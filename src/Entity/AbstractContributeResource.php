@@ -15,6 +15,7 @@ abstract class AbstractContributeResource
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
+     *
      * @ORM\Column(name="createdAt", type="datetime")
      */
     protected $createdAt;
@@ -23,6 +24,7 @@ abstract class AbstractContributeResource
      *
      * @Assert\NotBlank
      * @Assert\GreaterThan(value = 0)
+     *
      * @ORM\Column(name="quantity", type="float")
      */
     protected $quantity;
@@ -34,11 +36,13 @@ abstract class AbstractContributeResource
      * Set createdAt
      *
      * @param  \DateTime $createdAt
+     *
      * @return $this
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
     /**
@@ -54,11 +58,13 @@ abstract class AbstractContributeResource
      * Set quantity
      *
      * @param  float $quantity
+     *
      * @return $this
      */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+
         return $this;
     }
     /**
@@ -74,11 +80,13 @@ abstract class AbstractContributeResource
      * Set dream
      *
      * @param  Dream $dream
+     *
      * @return $this
      */
     public function setDream(Dream $dream = null)
     {
         $this->dream = $dream;
+
         return $this;
     }
     /**
