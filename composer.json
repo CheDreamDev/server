@@ -6,11 +6,16 @@
         "ext-iconv": "*",
         "facebook/graph-sdk": "^5.6",
         "sensio/framework-extra-bundle": "^5.1",
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "doctrine/orm": "^2.6",
+        "gedmo/doctrine-extensions": "^2.4",
         "symfony/console": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/lts": "^4@dev",
         "symfony/orm-pack": "^1.0",
+        "symfony/security-bundle": "^4.0",
+        "symfony/validator": "^4.0",
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
