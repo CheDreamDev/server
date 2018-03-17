@@ -8,7 +8,9 @@
 
 namespace App\Repository;
 
-
-class UserRepository {
-
+/**
+ * Class UserRepository
+ */
+class UserRepository
+{
 }
