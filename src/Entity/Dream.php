@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\EquipmentContribute;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,6 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="App\Repository\DreamRepository")
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @ApiResource
  */
 class Dream
 {
@@ -100,7 +101,6 @@ class Dream
      */
     protected $expiredDate;
 
-
     /**
      * @var int
      *
@@ -168,7 +168,13 @@ class Dream
     protected $tags;
 
     /**
-     * Constructor
+     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="dreams")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
+     */
+    protected $city;
+
+    /**
+     * Constructor.
      */
     public function __construct()
     {
@@ -178,9 +184,9 @@ class Dream
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -188,7 +194,7 @@ class Dream
     }
 
     /**
-     * Add usersWhoFavorites
+     * Add usersWhoFavorites.
      *
      * @param \App\Entity\User $usersWhoFavorites
      *
@@ -203,7 +209,7 @@ class Dream
     }
 
     /**
-     * Remove usersWhoFavorites
+     * Remove usersWhoFavorites.
      *
      * @param \App\Entity\User $usersWhoFavorites
      */
@@ -214,7 +220,7 @@ class Dream
     }
 
     /**
-     * Get usersWhoFavorites
+     * Get usersWhoFavorites.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -584,9 +590,9 @@ class Dream
     }
 
     /**
-     * Add dreamEquipmentContributions
+     * Add dreamEquipmentContributions.
      *
-     * @param  EquipmentContribute $dreamEquipmentContributions
+     * @param EquipmentContribute $dreamEquipmentContributions
      *
      * @return Dream
      */
@@ -598,7 +604,7 @@ class Dream
     }
 
     /**
-     * Remove dreamEquipmentContributions
+     * Remove dreamEquipmentContributions.
      *
      * @param EquipmentContribute $dreamEquipmentContributions
      */
@@ -608,7 +614,7 @@ class Dream
     }
 
     /**
-     * Get dreamEquipmentContributions
+     * Get dreamEquipmentContributions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -618,7 +624,7 @@ class Dream
     }
 
     /**
-     * Get mediaPoster
+     * Get mediaPoster.
      *
      * @var string
      *
@@ -627,5 +633,21 @@ class Dream
     public function getMediaPoster()
     {
         return '';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
     }
 }

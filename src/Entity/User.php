@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
 
-    use ContactsInfo;
+    use ContactsInfoTrait;
 
     const FAKE_EMAIL_PART = "@example.com";
 
@@ -512,4 +512,6 @@ class User implements UserInterface, \Serializable
     {
         $this->otherContributions->removeElement($otherContributions);
     }
+
+
 }
