@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiDocControllerTest extends WebTestCase
 {
+    /**
+     * Test fot successful api doc endpoint
+     */
     public function testApiDoc()
     {
         $client = static::createClient([], [
@@ -24,6 +27,9 @@ class ApiDocControllerTest extends WebTestCase
         $this->assertContains('udream', $client->getResponse()->getContent());
     }
 
+    /**
+     * Test fot wrong api doc endpoint
+     */
     public function testWrongApiDoc()
     {
         $client = static::createClient();
