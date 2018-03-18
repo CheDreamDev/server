@@ -15,6 +15,7 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
         "escapestudios/symfony2-coding-standard": "3.x-dev",
         "phpmd/phpmd": "^2.6",
         "phpunit/phpunit": "^7.0",
