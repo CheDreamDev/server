@@ -3,3 +3,22 @@ api_platform:
     version: '0.0.1'
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
+    formats:
+        jsonld:
+            mime_types:
+                - application/ld+json
+        jsonhal:
+            mime_types:
+                - application/hal+json
+        json:
+            mime_types:
+                - application/json
+        html:
+            mime_types:
+                - text/html
+        xml:
+            mime_types:
+                - application/xml
+        csv:
+            mime_types:
+                - text/csv
