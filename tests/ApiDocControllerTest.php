@@ -15,7 +15,7 @@ class ApiDocControllerTest extends WebTestCase
     {
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'apidoc',
-            'PHP_AUTH_PW'   => 'qwerty',
+            'PHP_AUTH_PW' => 'qwerty',
         ]);
 
         $client->request(Request::METHOD_GET, '/api');
