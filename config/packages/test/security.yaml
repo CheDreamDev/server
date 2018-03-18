@@ -1,6 +1,7 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\UserInterface: plaintext
+        App\Entity\Admin: plaintext
 
     providers:
         in_memory:

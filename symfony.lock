@@ -80,6 +80,15 @@
     "doctrine/orm": {
         "version": "v2.6.0"
     },
+    "easycorp/easyadmin-bundle": {
+        "version": "1.17",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.17",
+            "ref": "66070ea553247b0cd5275e21d0fe5399a25f40be"
+        }
+    },
     "escapestudios/symfony2-coding-standard": {
         "version": "3.x-dev"
     },
@@ -106,6 +115,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "pagerfanta/pagerfanta": {
+        "version": "v1.0.5"
     },
     "pdepend/pdepend": {
         "version": "2.5.2"
@@ -272,6 +284,9 @@
             "ref": "cc1afd81841db36fbef982fe56b48ade6716fac4"
         }
     },
+    "symfony/form": {
+        "version": "v4.0.6"
+    },
     "symfony/framework-bundle": {
         "version": "3.3",
         "recipe": {
@@ -290,6 +305,9 @@
     "symfony/inflector": {
         "version": "v4.0.6"
     },
+    "symfony/intl": {
+        "version": "v4.0.6"
+    },
     "symfony/lts": {
         "version": "4-dev"
     },
@@ -302,8 +320,14 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/options-resolver": {
+        "version": "v4.0.6"
+    },
     "symfony/orm-pack": {
         "version": "v1.0.5"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.7.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
@@ -367,6 +391,15 @@
     },
     "theseer/tokenizer": {
         "version": "1.1.0"
+    },
+    "twig/extensions": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
+        }
     },
     "twig/twig": {
         "version": "v2.4.6"
