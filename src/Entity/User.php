@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface, EquatableInterface, \Serializable
+class User implements AdvancedUserInterface, EquatableInterface, \Serializable
 {
     /**
      * @var int
@@ -89,7 +90,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        $this->salt = md5(uniqid('', true));
+        $this->salt     = null;
     }
 
     /**
@@ -159,11 +160,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Get salt
      *
-     * @return string
+     * @return null
      */
     public function getSalt()
     {
-        return $this->salt;
+        return null;
     }
 
     /**
@@ -222,6 +223,28 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
     }
 
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+
     /**
      * @see \Serializable::serialize()
      *
@@ -233,6 +256,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->isActive,
         ));
     }
 
@@ -247,6 +271,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->isActive,
             ) = unserialize($serialized);
     }
 
@@ -258,7 +283,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function isEqualTo(UserInterface $user)
     {
-        if (!$user instanceof User) {
+        if ( ! $user instanceof User) {
             return false;
         }
 
