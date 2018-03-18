@@ -223,22 +223,33 @@ class User implements AdvancedUserInterface, EquatableInterface, \Serializable
     {
     }
 
-
+    /**
+     * @return bool
+     */
     public function isAccountNonExpired()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function isAccountNonLocked()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function isCredentialsNonExpired()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return $this->isActive;
@@ -283,7 +294,7 @@ class User implements AdvancedUserInterface, EquatableInterface, \Serializable
      */
     public function isEqualTo(UserInterface $user)
     {
-        if ( ! $user instanceof User) {
+        if (! $user instanceof User) {
             return false;
         }
 
