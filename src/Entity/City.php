@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
  *
- * @ApiResource(attributes={"filters"={"offer.exists_filter"}})
+ * @ApiResource()
  * @ApiFilter(ExistsFilter::class, properties={"dreams"})
  */
 class City
