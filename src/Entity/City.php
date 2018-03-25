@@ -2,17 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
  *
- * @ApiResource()
- * @ApiFilter(ExistsFilter::class, properties={"dreams"})
+ * @ApiResource(
+ *     collectionOperations={"get"={"method"="GET", "path"="/cities"}},
+ *     itemOperations={"get"={"method"="GET", "path"="/city/{id}"}}
+ *     )
  */
 class City
 {

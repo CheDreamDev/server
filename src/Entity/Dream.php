@@ -16,7 +16,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"city": "exact"})
  */
 class Dream
 {
@@ -173,6 +172,7 @@ class Dream
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="dreams")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      */
     protected $city;
 
