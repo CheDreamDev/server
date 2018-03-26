@@ -17,11 +17,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "normalization_context"={"groups"={"read"}},
  *         "denormalization_context"={"groups"={"write"}}
  *     },
- *     collectionOperations={"get": {
- *         "method"="GET",
- *         "normalization_context"={"groups"={"read-faqs"}}
- *     }, "post"},
- *     itemOperations={"put", "delete"})
+ *     collectionOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"read-faqs"}
+ *             }
+ *         },
+ *         "post"
+ *     }
+ * )
  */
 class Faq
 {
