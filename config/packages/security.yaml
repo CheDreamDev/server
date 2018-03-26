@@ -19,9 +19,14 @@ security:
             http_basic: true
             provider: in_memory
 
+        api:
+            pattern: "^/api/*"
+            security: false
+
         main:
             pattern: "^/"
             anonymous: true
 
     access_control:
         - { path: "^/api$", roles: IS_AUTHENTICATED_FULLY }
+        - { path: "^/api/*", roles: IS_AUTHENTICATED_ANONYMOUS }
