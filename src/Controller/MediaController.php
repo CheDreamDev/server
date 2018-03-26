@@ -19,10 +19,12 @@ class MediaController extends Controller
 {
     /**
      * @Route("/media", name="media")
+     *
      * @Method("POST")
      *
+     * @param Request $request
+     *
      * @return Response
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
      */
     public function index(Request $request)
     {
@@ -35,7 +37,7 @@ class MediaController extends Controller
             /** @var UploadedFile $file */
             $file = $media->getFile();
 
-            $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
             // moves the file to the directory where brochures are stored
             $foo = $file->move(
