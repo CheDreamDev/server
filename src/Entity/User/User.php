@@ -184,7 +184,7 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->email,
-            $this->facebookId
+            $this->facebookId,
         ]);
     }
 
