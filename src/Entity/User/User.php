@@ -5,24 +5,27 @@ namespace App\Entity\User;
 //use Doctrine\Common\Collections\ArrayCollection;
 //use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 //use App\Entity\FinancialContribute;
 //use App\Entity\WorkContribute;
 //use App\Entity\OtherContribute;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="app_users")
  *
- *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @ApiResource
  */
 class User implements UserInterface, \Serializable
 {
 
 //    use ContactsInfo;
 
-    const FAKE_EMAIL_PART = "@example.com";
+    public const FAKE_EMAIL_PART = '@example.com';
 
     /**
      * @ORM\Column(type="integer")
@@ -32,7 +35,8 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=45, unique=true)
+     *
      */
     private $username;
 
@@ -84,6 +88,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="facebook_id", type="string", length=45, nullable=true, unique=true)
+     *
+     * @Assert\NotBlank
      */
     protected $facebookId;
 
@@ -142,7 +148,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return null
      */
-    public function getSalt()
+    public function getSalt(): null
     {
         // you *may* need a real salt depending on your encoder
         // see section on salt below
@@ -160,7 +166,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return array('ROLE_USER');
     }
@@ -193,19 +199,19 @@ class User implements UserInterface, \Serializable
      */
     public function unserialize($serialized)
     {
-        list(
+        [
             $this->id,
             $this->username,
             $this->password,
             $this->email,
-            $this->facebookId
-            ) = unserialize($serialized);
+            $this->facebookId,
+        ] = unserialize($serialized, null);
     }
 
     /**
      * @return string
      */
-    public function getFacebookId()
+    public function getFacebookId(): string
     {
         return $this->facebookId;
     }
@@ -225,7 +231,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -246,7 +252,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -286,7 +292,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getAbout()
+    public function getAbout(): string
     {
         return $this->about;
     }
