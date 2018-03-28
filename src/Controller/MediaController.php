@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Media;
-use App\Form\Type\MediaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class DefaultController
@@ -22,37 +23,38 @@ class MediaController extends Controller
      *
      * @Method("POST")
      *
-     * @param Request $request
+     * @param Request            $request
+     * @param ValidatorInterface $validator
      *
      * @return Response
+     *
+     * @throws FileException
      */
-    public function index(Request $request)
+    public function index(Request $request, ValidatorInterface $validator)
     {
         $media = new Media();
-        $form = $this->createForm(MediaType::class, $media);
-        $form->handleRequest($request);
+        /** @var UploadedFile $file */
+        $file = $request->files->get('file');
+        $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // $file stores the uploaded PDF file
-            /** @var UploadedFile $file */
-            $file = $media->getFile();
+        $media->setFile($file);
+        $media->setName($file->getClientOriginalName());
 
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-
-            // moves the file to the directory where brochures are stored
-            $foo = $file->move(
-                $this->getParameter('media_directory'),
-                $fileName
-            );
-
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $media->setFile($fileName);
-
-            return new JsonResponse(Response::HTTP_OK);
+        $errors = $validator->validate($media);
+        if (count($errors) > 0) {
+            return new JsonResponse(Response::HTTP_BAD_REQUEST);
         }
+        // moves the file to the directory where brochures are stored
+        $file->move(
+            $this->getParameter('media_directory'),
+            $fileName
+        );
 
-        return new JsonResponse(Response::HTTP_BAD_REQUEST);
+        $media->setFile($fileName);
+        $this->getDoctrine()->getManager()->persist($media);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse(Response::HTTP_OK);
     }
 
     /**
