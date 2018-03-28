@@ -12,18 +12,36 @@ use ApiPlatform\Core\Annotation\ApiResource;
 //use App\Entity\OtherContribute;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Table(name="app_users")
  *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *
- * @ApiResource
+ * @ApiResource(
+ *     attributes={
+ *         "normalization_context"={"groups"={"read"}},
+ *         "denormalization_context"={"groups"={"write"}}
+ *     },
+ *     itemOperations={
+ *         "put"={
+ *             "denormalization_context"={
+ *                 "groups"={"put-users"}
+ *             }
+ *         },
+ *         "get","delete"
+ *     }
+ * )
  */
 class User implements UserInterface, \Serializable
 {
 
 //    use ContactsInfo;
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     public const FAKE_EMAIL_PART = '@example.com';
 
@@ -31,12 +49,13 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Groups("read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=45, unique=true)
-     *
      */
     private $username;
 
@@ -47,11 +66,15 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
+     *
+     * @Groups({"read", "put-users"})
      */
     private $email;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
+     *
+     * @Groups("read")
      */
     private $isActive;
 
@@ -59,6 +82,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=50, nullable=true)
+     *
+     * @Groups("read")
      */
     protected $firstName;
 
@@ -67,6 +92,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
+     *
+     * @Groups("read")
      */
     protected $lastName;
 
@@ -74,6 +101,8 @@ class User implements UserInterface, \Serializable
      * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="date", nullable=true)
+     *
+     * @Groups("read")
      */
     protected $birthday;
 
@@ -81,6 +110,8 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="about", type="text", nullable=true)
+     *
+     * @Groups("read")
      */
     protected $about;
 
@@ -90,6 +121,8 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="facebook_id", type="string", length=45, nullable=true, unique=true)
      *
      * @Assert\NotBlank
+     *
+     * @Groups({"read", "write"})
      */
     protected $facebookId;
 
@@ -148,7 +181,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return null
      */
-    public function getSalt(): null
+    public function getSalt()
     {
         // you *may* need a real salt depending on your encoder
         // see section on salt below
@@ -172,9 +205,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     *
+     *  @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -270,9 +303,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getBirthday()
+    public function getBirthday(): \DateTime
     {
         return $this->birthday;
     }
@@ -307,6 +340,26 @@ class User implements UserInterface, \Serializable
         $this->about = $about;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     *
+     * @Groups("read")
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     *
+     * @Groups("read")
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
     }
 
 //    /**
