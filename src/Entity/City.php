@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+// @ApiFilter(ExistsFilter::class, properties={"dreams"}) // please add this annotation to the class after establishing one-to-many Dreams relation
+
 /**
  * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
@@ -22,7 +24,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get"}
  * )
- * @ApiFilter(ExistsFilter::class, properties={"dreams"})
  */
 class City
 {
@@ -43,20 +44,20 @@ class City
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Dream", mappedBy="city")
-     *
-     * @Groups("read")
-     */
-    private $dreams;
-
-    /**
-     * City constructor.
-     */
-    public function __construct()
-    {
-        $this->dreams = new ArrayCollection();
-    }
+//    /**
+//     * @ORM\OneToMany(targetEntity="App\Entity\Dream", mappedBy="city")
+//     *
+//     * @Groups("read")
+//     */
+//    private $dreams;
+//
+//    /**
+//     * City constructor.
+//     */
+//    public function __construct()
+//    {
+//        $this->dreams = new ArrayCollection();
+//    }
 
     /**
      * @return mixed
@@ -82,11 +83,11 @@ class City
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDreams()
-    {
-        return $this->dreams;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getDreams()
+//    {
+//        return $this->dreams;
+//    }
 }
