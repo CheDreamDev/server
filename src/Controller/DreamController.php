@@ -47,4 +47,33 @@ class DreamController extends Controller
 
         return new JsonResponse(Response::HTTP_OK);
     }
+
+    /**
+     * @Route("/dreams/edit/{id}", name="dreams_edit")
+     * @Method("PUT")
+     * @return Response
+     */
+    public function edit(Request $request, Dream $dream, ValidatorInterface $validator)
+    {
+        $data = $request->getContent();
+
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $errors = $validator->validate($dream);
+
+        if (count($errors) > 0) {
+            return new JsonResponse(Response::HTTP_BAD_REQUEST);
+        }
+        $serializer->deserialize($data, Dream::class, 'json', array('object_to_populate' => $dream));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($dream);
+        $em->flush();
+        $jsonDream = $serializer->serialize($dream, 'json');
+
+
+        return new JsonResponse(Response::HTTP_OK);
+    }
 }
