@@ -63,7 +63,7 @@ class Dream
     /**
      * @Gedmo\Slug(fields={"title"})
      *
-     * @ORM\Column(name="slug", type="string", length=200, unique=true)
+     * @ORM\Column(name="slug", type="string", nullable=true, length=200, unique=true)
      */
     protected $slug;
 
