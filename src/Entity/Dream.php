@@ -68,20 +68,16 @@ class Dream
     protected $slug;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @Gedmo\Timestampable(on="create")
-     *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="createdAt", type="string")
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @Gedmo\Timestampable(on="update")
-     *
-     * @ORM\Column(name="updatedAt", type="datetime")
+     * @ORM\Column(name="updatedAt", type="string")
      */
     protected $updatedAt;
 
@@ -329,7 +325,7 @@ class Dream
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -337,7 +333,7 @@ class Dream
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param string $createdAt
      */
     public function setCreatedAt($createdAt)
     {
@@ -345,7 +341,7 @@ class Dream
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -353,7 +349,7 @@ class Dream
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param string $updatedAt
      */
     public function setUpdatedAt($updatedAt)
     {
