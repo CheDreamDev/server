@@ -43,9 +43,10 @@ class User implements UserInterface, \Serializable
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
-    public const FAKE_EMAIL_PART = '@example.com';
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -55,16 +56,22 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=45, unique=true)
      */
     private $username;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=60, unique=true)
      *
      * @Groups({"read", "put-users"})
@@ -72,6 +79,8 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(name="is_active", type="boolean")
      *
      * @Groups("read")
