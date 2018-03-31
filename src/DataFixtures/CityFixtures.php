@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class CityFixtures extends Fixture
 {
-    private $cities = [
+    const CITIES = [
         'Київ',
         'Одеса',
         'Миколаїв',
@@ -21,7 +21,7 @@ class CityFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        foreach ($this->cities as $cityName) {
+        foreach (CityFixtures::CITIES as $cityName) {
             $city = new City();
             $city->setName($cityName);
             $manager->persist($city);

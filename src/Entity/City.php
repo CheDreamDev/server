@@ -2,15 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
-// @ApiFilter(ExistsFilter::class, properties={"dreams"}) // please add this annotation to the class after establishing one-to-many Dreams relation
 
 /**
  * @ORM\Table(name="cities")
@@ -27,7 +23,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class City
 {
+    use TimestampableEntity;
+
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -37,6 +37,8 @@ class City
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, unique=true)
      *
      * @Assert\Length(min=3, max=100)
@@ -44,25 +46,10 @@ class City
      */
     private $name;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="App\Entity\Dream", mappedBy="city")
-//     *
-//     * @Groups("read")
-//     */
-//    private $dreams;
-//
-//    /**
-//     * City constructor.
-//     */
-//    public function __construct()
-//    {
-//        $this->dreams = new ArrayCollection();
-//    }
-
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -70,24 +57,40 @@ class City
     /**
      * @return mixed
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * @param mixed $name
+     *
+     * @return City
      */
-    public function setName($name): void
+    public function setName($name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getDreams()
-//    {
-//        return $this->dreams;
-//    }
+    /**
+     * @Groups("read")
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @Groups("read")
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
 }
