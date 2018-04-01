@@ -49,7 +49,8 @@ class Dream
      *
      * @ORM\Column(name="title", type="string", length=200)
      *
-     * @Groups({"read", "write"})
+     * @Groups({"read", "write", "read-dream"})
+     *
      */
     protected $title;
 
@@ -58,12 +59,14 @@ class Dream
      *
      * @ORM\Column(name="description", type="text")
      *
-     * @Groups({"read", "write"})
+     * @Groups({"read", "write", "read-dream"})
      */
     protected $description;
 
     /**
      * @ORM\Column(name="status", type="string", length=100, nullable = true)
+     *
+     * @Groups({"read", "write", "read-dream"})
      */
     protected $status;
 
@@ -110,6 +113,8 @@ class Dream
     }
 
     /**
+     * @Groups({"read", "read-dream"})
+     *
      * @return \DateTime
      */
     public function getCreatedAt(): \DateTime
@@ -145,21 +150,11 @@ class Dream
 
     /**
      * @param mixed $status
+     *
+     * @Groups({"read", "read-dream"})
      */
-    public function setstatus($status)
+    public function setStatus($status)
     {
         $this->status = $status;
-    }
-
-    /**
-     * Get mediaPoster
-     *
-     * @var string
-     *
-     * @return string
-     */
-    public function getMediaPoster()
-    {
-        return '';
     }
 }
