@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -11,14 +14,32 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="dreams")
  * @ORM\Entity(repositoryClass="App\Repository\DreamRepository")
  *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @ApiResource(
+ *     attributes={
+ *         "normalization_context"={"groups"={"read"}},
+ *         "denormalization_context"={"groups"={"write"}}
+ *     },
+ *     collectionOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"read-dream"}
+ *             }
+ *         },
+ *         "post"
+ *     }
+ * )
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Dream
 {
+    use TimestampableEntity, SoftDeleteableEntity;
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Groups({"read", "read-dream"})
      */
     protected $id;
 
@@ -27,6 +48,8 @@ class Dream
      * @Assert\Length(min = "5", minMessage = "dream.min_length")
      *
      * @ORM\Column(name="title", type="string", length=200)
+     *
+     * @Groups({"read", "write"})
      */
     protected $title;
 
@@ -34,137 +57,15 @@ class Dream
      * @Assert\NotBlank(message = "dream.not_blank")
      *
      * @ORM\Column(name="description", type="text")
+     *
+     * @Groups({"read", "write"})
      */
     protected $description;
 
     /**
-     * @ORM\Column(name="rejectedDescription", type="text", nullable=true)
+     * @ORM\Column(name="status", type="string", length=100, nullable = true)
      */
-    protected $rejectedDescription;
-
-    /**
-     * @ORM\Column(name="implementedDescription", type="text", nullable=true)
-     */
-    protected $implementedDescription;
-
-    /**
-     * @ORM\Column(name="completedDescription", type="text", nullable=true)
-     */
-    protected $completedDescription;
-
-    /**
-     * @Assert\NotBlank(message = "dream.not_blank")
-     * @Assert\Regex(pattern="/^[+0-9 ()-]+$/", message="dream.only_numbers")
-     *
-     * @ORM\Column(name="phone", type="string", length=45, nullable=true)
-     */
-    protected $phone;
-
-    /**
-     * @Gedmo\Slug(fields={"title"})
-     *
-     * @ORM\Column(name="slug", type="string", nullable=true, length=200, unique=true)
-     */
-    protected $slug;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="createdAt", type="string")
-     */
-    protected $createdAt;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="updatedAt", type="string")
-     */
-    protected $updatedAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
-     */
-    protected $deletedAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expiredDate", type="date", nullable=true)
-     */
-    protected $expiredDate;
-
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="financialCompleted", type="smallint", nullable=true)
-     */
-    protected $financialCompleted;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="workCompleted", type="smallint", nullable=true)
-     */
-    protected $workCompleted;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="equipmentCompleted", type="smallint", nullable=true)
-     */
-    protected $equipmentCompleted;
-
-//    /**
-//     * ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="favoriteDreams")
-//     * ORM\JoinTable(name="favorite_dreams")
-//     */
-//    protected $usersWhoFavorites;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="favoritesCount", type="integer", nullable=false)
-     */
-    protected $favoritesCount;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="dreams")
-//     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
-//     */
-//    protected $author;
-
-    /**
-     * @ORM\Column(name="currentStatus", type="string", length=100, nullable = true)
-     */
-    protected $currentStatus;
-
-//    protected $dreamPictures;
-//    protected $dreamPoster;
-//    protected $dreamFiles;
-//    protected $dreamVideos;
-
-//    /**
-//     * @ORM\OneToMany(targetEntity="Status", mappedBy="dream", cascade={"persist"})
-//     */
-//    protected $statuses;
-
-//    /**
-//     * @ORM\ManyToMany(targetEntity="App\Entity\Tags", inversedBy="$dreamsWithTag" )
-//     * @ORM\Column(type="string")
-//     */
-//    protected $tags;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-//        $this->usersWhoFavorites = new ArrayCollection();
-        $this->favoritesCount = 0;
-    }
+    protected $status;
 
     /**
      * Get id
@@ -175,42 +76,6 @@ class Dream
     {
         return $this->id;
     }
-
-//    /**
-//     * Add usersWhoFavorites
-//     *
-//     * param \App\Entity\User $usersWhoFavorites
-//     *
-//     * return Dream
-//     */
-//    public function addUsersWhoFavorite(\App\Entity\User $usersWhoFavorites)
-//    {
-//        $this->usersWhoFavorites[] = $usersWhoFavorites;
-//        $this->favoritesCount = $this->usersWhoFavorites->count();
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Remove usersWhoFavorites
-//     *
-//     * param \App\Entity\User $usersWhoFavorites
-//     */
-//    public function removeUsersWhoFavorite(\App\Entity\User $usersWhoFavorites)
-//    {
-//        $this->usersWhoFavorites->removeElement($usersWhoFavorites);
-//        $this->favoritesCount = $this->usersWhoFavorites->count();
-//    }
-
-//    /**
-//     * Get usersWhoFavorites
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getUsersWhoFavorites()
-//    {
-//        return $this->usersWhoFavorites;
-//    }
 
     /**
      * @return mixed
@@ -245,171 +110,21 @@ class Dream
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getRejectedDescription()
-    {
-        return $this->rejectedDescription;
-    }
-
-    /**
-     * @param mixed $rejectedDescription
-     */
-    public function setRejectedDescription($rejectedDescription)
-    {
-        $this->rejectedDescription = $rejectedDescription;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImplementedDescription()
-    {
-        return $this->implementedDescription;
-    }
-
-    /**
-     * @param mixed $implementedDescription
-     */
-    public function setImplementedDescription($implementedDescription)
-    {
-        $this->implementedDescription = $implementedDescription;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCompletedDescription()
-    {
-        return $this->completedDescription;
-    }
-
-    /**
-     * @param mixed $completedDescription
-     */
-    public function setCompletedDescription($completedDescription)
-    {
-        $this->completedDescription = $completedDescription;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @param mixed $phone
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @Groups({"read", "read-dream"})
+     *
+     * @return \DateTime
      */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @param string $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param \DateTime $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getExpiredDate()
-    {
-        return $this->expiredDate;
-    }
-
-    /**
-     * @param \DateTime $expiredDate
-     */
-    public function setExpiredDate($expiredDate)
-    {
-        $this->expiredDate = $expiredDate;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFinancialCompleted()
-    {
-        return $this->financialCompleted;
-    }
-
-    /**
-     * @param int $financialCompleted
-     */
-    public function setFinancialCompleted($financialCompleted)
-    {
-        $this->financialCompleted = $financialCompleted;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWorkCompleted()
-    {
-        return $this->workCompleted;
     }
 
     /**
@@ -421,156 +136,20 @@ class Dream
     }
 
     /**
-     * @return int
-     */
-    public function getEquipmentCompleted()
-    {
-        return $this->equipmentCompleted;
-    }
-
-    /**
-     * @param int $equipmentCompleted
-     */
-    public function setEquipmentCompleted($equipmentCompleted)
-    {
-        $this->equipmentCompleted = $equipmentCompleted;
-    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getTags()
-//    {
-//        return $this->tags;
-//    }
-
-//    /**
-//     * @param mixed $tags
-//     */
-//    public function setTags($tags)
-//    {
-//        $this->tags = $tags;
-//    }
-
-//    /**
-//     * @param mixed $usersWhoFavorites
-//     */
-//    public function setUsersWhoFavorites($usersWhoFavorites)
-//    {
-//        $this->usersWhoFavorites = $usersWhoFavorites;
-//    }
-
-    /**
-     * @return int
-     */
-    public function getFavoritesCount()
-    {
-        return $this->favoritesCount;
-    }
-
-    /**
-     * @param int $favoritesCount
-     */
-    public function setFavoritesCount($favoritesCount)
-    {
-        $this->favoritesCount = $favoritesCount;
-    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getAuthor()
-//    {
-//        return $this->author;
-//    }
-
-//    /**
-//     * @param mixed $author
-//     */
-//    public function setAuthor($author)
-//    {
-//        $this->author = $author;
-//    }
-
-    /**
      * @return mixed
      */
-    public function getCurrentStatus()
+    public function getStatus()
     {
-        return $this->currentStatus;
+        return $this->status;
     }
 
     /**
-     * @param mixed $currentStatus
+     * @param mixed $status
      */
-    public function setCurrentStatus($currentStatus)
+    public function setstatus($status)
     {
-        $this->currentStatus = $currentStatus;
+        $this->status = $status;
     }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getDreamPictures()
-//    {
-//        return $this->dreamPictures;
-//    }
-
-//    /**
-//     * @param mixed $dreamPictures
-//     */
-//    public function setDreamPictures($dreamPictures)
-//    {
-//        $this->dreamPictures = $dreamPictures;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getDreamPoster()
-//    {
-//        return $this->dreamPoster;
-//    }
-
-//    /**
-//     * @param mixed $dreamPoster
-//     */
-//    public function setDreamPoster($dreamPoster)
-//    {
-//        $this->dreamPoster = $dreamPoster;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getDreamFiles()
-//    {
-//        return $this->dreamFiles;
-//    }
-
-//    /**
-//     * @param mixed $dreamFiles
-//     */
-//    public function setDreamFiles($dreamFiles)
-//    {
-//        $this->dreamFiles = $dreamFiles;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getDreamVideos()
-//    {
-//        return $this->dreamVideos;
-//    }
-
-//    /**
-//     * @param mixed $dreamVideos
-//     */
-//    public function setDreamVideos($dreamVideos)
-//    {
-//        $this->dreamVideos = $dreamVideos;
-//    }
 
     /**
      * Get mediaPoster
