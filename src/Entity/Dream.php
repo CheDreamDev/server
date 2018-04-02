@@ -35,6 +35,8 @@ class Dream
 {
     use TimestampableEntity, SoftDeleteableEntity;
     /**
+     * @var int
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -44,6 +46,8 @@ class Dream
     protected $id;
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank(message = "dream.not_blank")
      * @Assert\Length(min = "5", minMessage = "dream.min_length")
      *
@@ -55,6 +59,8 @@ class Dream
     protected $title;
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank(message = "dream.not_blank")
      *
      * @ORM\Column(name="description", type="text")
@@ -64,6 +70,8 @@ class Dream
     protected $description;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="status", type="string", length=100, nullable = true)
      *
      * @Groups({"read", "write", "read-dream"})
@@ -71,8 +79,6 @@ class Dream
     protected $status;
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -89,7 +95,7 @@ class Dream
     }
 
     /**
-     * @param mixed $title
+     * @param string $title
      */
     public function setTitle($title)
     {
@@ -105,7 +111,7 @@ class Dream
     }
 
     /**
-     * @param mixed $description
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -149,7 +155,7 @@ class Dream
     }
 
     /**
-     * @param mixed $status
+     * @param string $status
      *
      * @Groups({"read", "read-dream"})
      */
