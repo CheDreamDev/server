@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "normalization_context"={"groups"={"read"}},
  *         "denormalization_context"={"groups"={"write"}}
  *     },
- *     collectionOperations={"get", "post"},
+ *     collectionOperations={"post"},
  *     itemOperations={"get", "put", "delete"}
  * )
  *
@@ -53,6 +53,14 @@ class Comment
     private $body;
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @param string $body
      *
      * @return Comment
@@ -62,14 +70,6 @@ class Comment
         $this->body = $body;
 
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     /**
@@ -99,6 +99,4 @@ class Comment
     {
         return $this->updatedAt;
     }
-
-
 }
