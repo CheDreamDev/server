@@ -45,14 +45,14 @@ class City
      *
      * @ORM\Column(type="string", length=255, unique=true)
      *
-     * @Assert\Length(min=3, max=100)
+     * @Assert\Length(min=3, max=255)
      *
      * @Groups({"read", "write"})
      */
     private $name;
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId(): int
     {
@@ -60,7 +60,7 @@ class City
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName(): string
     {
@@ -68,7 +68,7 @@ class City
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      *
      * @return City
      */
