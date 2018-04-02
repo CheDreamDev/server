@@ -138,11 +138,23 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return User
+     */
+    public function setUsername($username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -156,11 +168,43 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
