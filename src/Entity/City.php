@@ -21,6 +21,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get"}
  * )
+ *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class City
 {
@@ -44,6 +46,7 @@ class City
      * @ORM\Column(type="string", length=255, unique=true)
      *
      * @Assert\Length(min=3, max=100)
+     *
      * @Groups({"read", "write"})
      */
     private $name;
