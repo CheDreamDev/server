@@ -107,6 +107,9 @@
             "ref": "7b6cbc842f8cd3d550815247d12294f6f304a8c4"
         }
     },
+    "nikic/php-parser": {
+        "version": "v4.0.1"
+    },
     "ocramius/package-versions": {
         "version": "1.3.0"
     },
