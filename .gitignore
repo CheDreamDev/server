@@ -8,3 +8,4 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 ###< phpunit/phpunit ###
+/.php_cs.cache
