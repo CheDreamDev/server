@@ -68,6 +68,9 @@
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         }
     },
+    "doctrine/event-manager": {
+        "version": "v1.0.0"
+    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -82,6 +85,12 @@
     },
     "doctrine/orm": {
         "version": "v2.6.0"
+    },
+    "doctrine/persistence": {
+        "version": "v1.0.0"
+    },
+    "doctrine/reflection": {
+        "version": "v1.0.0"
     },
     "escapestudios/symfony2-coding-standard": {
         "version": "3.x-dev"
@@ -163,9 +172,6 @@
             "version": "4.7",
             "ref": "c276fa48d4713de91eb410289b3b1834acb7e403"
         }
-    },
-    "phpunit/phpunit-mock-objects": {
-        "version": "6.0.0"
     },
     "psr/cache": {
         "version": "1.0.1"
